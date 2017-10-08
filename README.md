@@ -1,11 +1,11 @@
-# Garden code watcher
+# Garden Gnome
 
 <img width="30%"
      align="right" padding="5px"
      alt=":)"
      src="https://raw.githubusercontent.com/Otann/garden-gnome/master/resources/gnome.jpeg?raw=true"/>
 
-Components to watch Garden sources from REPL for reloaded workflow.
+Helper to watch and autoreload Garden sources from REPL and outside as well.
 
 In combination with [Figwheel][figwheel] gives you instant sync between your
 [Garden][garden] sources and page in the browser
@@ -56,12 +56,17 @@ Use following command to compile all your configurations
 $ lein run -m garden-gnome.compile
 ```
 
-### Watching for changes in repl or reloaded workflow  
+### Watching from shell
+
+Use following command to compile all your configurations
+
+```sh
+$ lein run -m garden-gnome.watch
+```
+
+### With [Mount][mount]  
 
 In your `user.clj`:
-
-#### For Mount 
-
 
 ```clojure
 (ns user
@@ -73,7 +78,9 @@ In your `user.clj`:
   :stop (garden-watcher/stop! garden))
 ```
 
-### For Component
+### With [Component][component]
+
+In your `user.clj`:
 
 ```clojure
 (ns user
@@ -96,7 +103,7 @@ Now in your REPL whenever you start you system, a watcher will start which
 will observe changes in directories specified in your garden config and automatically
 recompile mentioned namespaces whenever files change.
 
-If you have [Figwheel][figwheel] running, it will pick your changes automatically,
+If you have [Figwheel][figwheel] set up, it will pick your changes automatically,
 so will have a closed loop from editing garden code to seeing changes in your browser instantly.
 
 ## Credits
@@ -114,3 +121,5 @@ your option) any later version.
 [lein-garden]: https://github.com/noprompt/lein-garden
 [figwheel]: https://github.com/bhauman/lein-figwheel
 [garden]: https://github.com/noprompt/garden
+[mount]: https://github.com/tolitius/mount
+[component]: https://github.com/stuartsierra/component
