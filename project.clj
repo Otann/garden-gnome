@@ -1,4 +1,4 @@
-(defproject garden-mount "0.1.0"
+(defproject garden-gnome "0.1.1-SNAPSHOT"
   :description "Provides support for watching Garden styles in reloaded workflow"
   :url "https://github.com/Otann/garden-gnome"
 
