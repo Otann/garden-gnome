@@ -1,5 +1,10 @@
 # Garden reloader mount component
 
+<img width="30%"
+     align="right" padding="5px"
+     alt=":)"
+     src="https://raw.githubusercontent.com/Otann/garden-gnome/master/resources/gnome.jpeg?raw=true"/>
+
 Helper to define your own component to watch Garden sources from repl.
 
 Inspired by [plexus/garden-watcher](https://github.com/plexus/garden-watcher) 
