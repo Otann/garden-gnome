@@ -1,6 +1,6 @@
-(ns garden-mount.core-test
+(ns garden-gnome.core-test
   (:require [clojure.test :refer :all]
-            [garden-mount.core :refer :all]))
+            [garden-gnome.watcher :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

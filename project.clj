@@ -1,6 +1,6 @@
-(defproject garden-mount "0.1.0-SNAPSHOT"
+(defproject garden-mount "0.1.0"
   :description "Provides support for watching Garden styles in reloaded workflow"
-  :url "https://github.com/Otann/garden-mount"
+  :url "https://github.com/Otann/garden-gnome"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/java.classpath "0.2.3"]
@@ -10,23 +10,24 @@
   :main ^:skip-aot garden-mount.main
 
   :profiles {:uberjar {:aot :all}
-             :dev     {:dependencies [[mount "0.1.11"]
+             :dev     {:source-paths ["dev" "src"]
+                       :dependencies [[mount "0.1.11"]
+                                      [com.stuartsierra/component "0.3.2"]
                                       [org.clojure/tools.nrepl "0.2.13"]
-                                      [org.clojure/tools.namespace "0.2.11"]]
-                       :source-paths ["dev"]}}
+                                      [org.clojure/tools.namespace "0.2.11"]]}}
 
   :repl-options {:init-ns user}
-:garden {:builds [{:source-paths ["dev/sample"]
-                   :stylesheet   sample.styles/screen
-                   :compiler     {:output-to     "resources/public/css/screen.css"
-                                  :pretty-print? true}}]}
+  :garden {:builds [{:source-path "dev/sample"
+                     :stylesheet  sample.styles/screen
+                     :compiler    {:output-to     "resources/public/css/screen.css"
+                                   :pretty-print? true}}]}
 
   ;; Artifact deployment info
   :scm {:name "git"
-        :url "https://github.com/otann/morse"}
+        :url  "https://github.com/otann/morse"}
 
   :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+            :url  "http://www.eclipse.org/legal/epl-v10.html"}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]

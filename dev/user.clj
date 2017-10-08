@@ -1,14 +1,14 @@
 (ns user
   (:require [mount.core :as mount]
-            [garden-mount.watcher :as garden-watcher]
+            [garden-gnome.watcher :as garden-gnome]
             [clojure.tools.namespace.repl :as ns-tools]))
 
-(mount/defstate garden
-  :start (garden-watcher/start! (garden-watcher/default-config))
-  :stop (garden-watcher/stop! garden))
+(mount/defstate gnome
+  :start (garden-gnome/start! (garden-gnome/default-config))
+  :stop (garden-gnome/stop! gnome))
 
 (defn start []
-  (mount/start #'garden))
+  (mount/start #'gnome))
 
 (defn stop []
   (mount/stop))
