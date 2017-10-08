@@ -40,22 +40,6 @@ Add following configuration in your `project.clj` (same format as [lein-garden][
                                  :pretty-print? true}}]}
 ```
 
-## One-time compilation
-
-Use following command to compile all your configurations
-
-```sh
-$ lein run -m garden-gnome.compile
-```
-
-## Watching from shell
-
-Use following command to compile all your configurations
-
-```sh
-$ lein run -m garden-gnome.watch
-```
-
 ## Reloaded Workflow
 
 Now in your REPL whenever you start you system, a watcher will start which
@@ -94,6 +78,29 @@ so will have a closed loop from editing garden code to seeing changes in your br
     (let [watcher (:watcher this)]
       (garden-gnome/stop! watcher)
       (dissoc this :watcher))))
+```
+## From shell
+
+Use following command to compile all your configurations once
+
+```sh
+$ lein run -m garden-gnome.compile
+```
+
+And this one to watch them from REPL
+
+```sh
+$ lein run -m garden-gnome.watch
+```
+
+## Integrate into build process
+
+You can easily integrate Garden Gnome into your packaging process like this:
+
+```clojure
+:profiles {:uberjar {:prep-tasks ["compile"
+                                  ["cljsbuild" "once" "min"]
+                                  ["run" "-m" "garden-gnome.compile"]]}}
 ```
 
 ## Credits
