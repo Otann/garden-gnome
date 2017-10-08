@@ -1,9 +1,43 @@
 (defproject garden-mount "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Provides support for watching Garden styles in reloaded workflow"
+  :url "https://github.com/Otann/garden-mount"
+
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/java.classpath "0.2.3"]
+                 [garden "1.3.2"]
+                 [hawk "0.2.11"]]
+
+  :main ^:skip-aot garden-mount.main
+
+  :profiles {:uberjar {:aot :all}
+             :dev     {:dependencies [[mount "0.1.11"]
+                                      [org.clojure/tools.nrepl "0.2.13"]
+                                      [org.clojure/tools.namespace "0.2.11"]]
+                       :source-paths ["dev"]}}
+
+  :repl-options {:init-ns user}
+:garden {:builds [{:source-paths ["dev/sample"]
+                   :stylesheet   sample.styles/screen
+                   :compiler     {:output-to     "resources/public/css/screen.css"
+                                  :pretty-print? true}}]}
+
+  ;; Artifact deployment info
+  :scm {:name "git"
+        :url "https://github.com/otann/morse"}
+
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.7.0"]]
-  :main ^:skip-aot garden-mount.core
-  :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ["vcs" "tag"]
+                  ["deploy" "clojars"]
+                  ["change" "version" "leiningen.release/bump-version"]
+                  ["vcs" "commit"]]
+
+  :pom-addition [:developers [:developer
+                              [:name "Anton Chebotaev"]
+                              [:url "http://otann.com"]
+                              [:email "anton.chebotaev@gmail.com"]
+                              [:timezone "+1"]]])

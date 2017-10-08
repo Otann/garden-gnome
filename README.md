@@ -1,36 +1,62 @@
-# garden-mount
+# Garden reloader mount component
 
-FIXME: description
+Helper to define your own component to watch Garden sources from repl.
+
+Inspired by [plexus/garden-watcher](https://github.com/plexus/garden-watcher) 
+and adapted to use with mount instead of [lein-garden][lein-garden].
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Add garden-mount as a dependency in project.clj (Leiningen) or build.boot (Boot).
+
+`[garden-mount "0.1.0"]`
 
 ## Usage
 
-FIXME: explanation
+Configuration follows [lein-garden][lein-garden]:
 
-    $ java -jar garden-mount-0.1.0-standalone.jar [args]
+Say you have a file with your styles `sample.styles/screen`:
 
-## Options
+```clojure
+(ns sample.styles
+  (:require [garden.def :as garden]))
 
-FIXME: listing of options this app accepts.
+(garden/defstyles screen
+  [:body {:background-color "black"}])
+```
 
-## Examples
+And you have following configuration in your `project.clj`
 
-...
+```clojure
+:garden {:builds [{;; Source path where to watch for changes:
+                   :source-paths ["dev/sample"]
+                   ;; The var containing your stylesheet:
+                   :stylesheet   sample.styles/screen
+                   ;; Compiler flags passed to `garden.core/css`:
+                   :compiler     {:output-to     "resources/public/css/screen.css"
+                                  :pretty-print? true}}]}
+```
 
-### Bugs
+Then in your `user.clj` just add new mount component:
 
-...
+```clojure
+(ns user
+  (:require [mount.core :as mount]
+            [garden-mount.watcher :as garden-watcher]
+            [clojure.tools.namespace.repl :as ns-tools]))
 
-### Any Other Sections
-### That You Think
-### Might be Useful
+(mount/defstate garden
+  :start (garden-watcher/start! (garden-watcher/default-config))
+  :stop (garden-watcher/stop! garden))
+```
+
+Now in your REPL whenever you start you mount system, a watcher will start which 
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Anton Chebotaev
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
+
+[lein-garden]: https://github.com/noprompt/lein-garden
