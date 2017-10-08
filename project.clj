@@ -19,7 +19,7 @@
   :repl-options {:init-ns user}
   :garden {:builds [{:source-path "dev/sample"
                      :stylesheet  sample.styles/screen
-                     :compiler    {:output-to     "resources/public/css/screen.css"
+                     :compiler    {:output-to     "resources/public/screen.css"
                                    :pretty-print? true}}]}
 
   ;; Artifact deployment info
@@ -35,7 +35,8 @@
                   ["vcs" "tag"]
                   ["deploy" "clojars"]
                   ["change" "version" "leiningen.release/bump-version"]
-                  ["vcs" "commit"]]
+                  ["vcs" "commit"]
+                  ["vcs" "push"]]
 
   :pom-addition [:developers [:developer
                               [:name "Anton Chebotaev"]

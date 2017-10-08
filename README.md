@@ -16,15 +16,7 @@ Add garden-gnome as a dependency in project.clj (Leiningen) or build.boot (Boot)
 
 `[garden-gnome "0.1.0"]`
 
-## Usage
-
-### Configuration
-
-Add dependency to your `project.clj`:
-
-```clojure
-:profiles {:dev {:dependencies [[garden-gnome "0.1.0"]]}}
-```
+## Configuration
 
 Then say you have a namespace with your styles defined:
 
@@ -40,15 +32,15 @@ Add following configuration in your `project.clj` (same format as [lein-garden][
 
 ```clojure
 :garden {:builds [{;; Source path where to watch for changes:
-                   :source-path "dev/sample"]
+                   :source-path "dev/sample"
                    ;; The var containing your stylesheet:
-                   :stylesheets [sample.styles/screen]
+                   :stylesheet  sample.styles/screen
                    ;; Compiler flags passed to `garden.core/css`:
-                   :compiler     {:output-to     "resources/public/css/screen.css"
-                                  :pretty-print? true}}]}
+                   :compiler    {:output-to     "resources/public/screen.css"
+                                 :pretty-print? true}}]}
 ```
 
-### One-time compilation
+## One-time compilation
 
 Use following command to compile all your configurations
 
@@ -56,7 +48,7 @@ Use following command to compile all your configurations
 $ lein run -m garden-gnome.compile
 ```
 
-### Watching from shell
+## Watching from shell
 
 Use following command to compile all your configurations
 
@@ -64,23 +56,28 @@ Use following command to compile all your configurations
 $ lein run -m garden-gnome.watch
 ```
 
-### With [Mount][mount]  
+## Reloaded Workflow
 
-In your `user.clj`:
+Now in your REPL whenever you start you system, a watcher will start which
+will observe changes in directories specified in your garden config and automatically
+recompile mentioned namespaces whenever files change.
+
+If you have [Figwheel][figwheel] set up, it will pick your changes automatically,
+so will have a closed loop from editing garden code to seeing changes in your browser instantly.
+
+### With [Mount][mount]  
 
 ```clojure
 (ns user
   (:require [mount.core :as mount]
-            [garden-gnome.watcher :as garden-watcher]))
+            [garden-gnome.watcher :as garden-gnome]))
 
 (mount/defstate garden
-  :start (garden-watcher/start! (garden-watcher/default-config))
-  :stop (garden-watcher/stop! garden))
+  :start (garden-gnome/start! (garden-gnome/default-config))
+  :stop (garden-gnome/stop! garden))
 ```
 
 ### With [Component][component]
-
-In your `user.clj`:
 
 ```clojure
 (ns user
@@ -98,13 +95,6 @@ In your `user.clj`:
       (garden-gnome/stop! watcher)
       (dissoc this :watcher))))
 ```
-
-Now in your REPL whenever you start you system, a watcher will start which
-will observe changes in directories specified in your garden config and automatically
-recompile mentioned namespaces whenever files change.
-
-If you have [Figwheel][figwheel] set up, it will pick your changes automatically,
-so will have a closed loop from editing garden code to seeing changes in your browser instantly.
 
 ## Credits
 
